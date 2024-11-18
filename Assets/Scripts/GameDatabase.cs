@@ -7,8 +7,8 @@ public class GameDatabase : MonoBehaviour
     public static List<Fraction> fractionList = new List<Fraction>();
     public static List<Card> cardList = new List<Card>();
 
-	public Player player1 = new Player();
-	public Player player2 = new Player();
+	//public Player player1 = new Player();
+	//public Player player2 = new Player();
 
     public GameObject cardPrefab;
     public Transform cardParent;
@@ -19,8 +19,8 @@ public class GameDatabase : MonoBehaviour
 	public GameObject unitPrefab;
     public Transform unitParent;
 	
-	public GameObject rowPrefab;
-	public GameObject rowParent;
+	//public GameObject rowPrefab;
+	//public GameObject rowParent;
 
     void Start(){
         this.CreateFractions();
