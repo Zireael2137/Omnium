@@ -7,41 +7,32 @@ using TMPro;
 
 public class UnitDisplay : MonoBehaviour
 {
-
-    private Card card;
+	public Unit unit;
 	
-	public RectTransform unitRect;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI damageText;
-    //public TextMeshProUGUI useCostText;
 
-    //public Image useCostField;
-
-    public Image cardUnitImage;
-
-    
-    public void SetCard(Card card)
+    public Image unitImage;
+	
+    public void SetUnit(Unit unit)
     {
-        this.card = card;
-        this.UpdateCardDisplay();
+        this.unit = unit;
+        this.UpdateUnitDisplay();
     }
 
-    public void UpdateCardDisplay(){
+    public void UpdateUnitDisplay(){
         
-        this.healthText.text = this.card.health.ToString();
-        this.damageText.text = this.card.damage.ToString();
+        this.healthText.text = this.unit.health.ToString();
+        this.damageText.text = this.unit.damage.ToString();
         
-        if (card.cardUnitImage != null)
+        if (unit.unitImage != null)
         {
-            cardUnitImage.sprite = card.cardUnitImage;
-            cardUnitImage.gameObject.SetActive(true); 
+            unitImage.sprite = unit.unitImage;
+            unitImage.gameObject.SetActive(true); 
         }
         else
         {
-            cardUnitImage.gameObject.SetActive(false); 
+            unitImage.gameObject.SetActive(false); 
         }
-		unitRect.anchoredPosition = new Vector2(card.unitX,card.unitY);
     }
-    
-    
 }

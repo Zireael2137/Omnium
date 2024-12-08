@@ -7,26 +7,18 @@ using TMPro;
 
 public class CardDisplay : MonoBehaviour
 {
-
-    private Card card;
+	public Card card;
 	
-	public RectTransform cardRect;
-
-    public TextMeshProUGUI nameText;
+	public TextMeshProUGUI nameText;
     public TextMeshProUGUI healthText;
-    public TextMeshProUGUI damageText;
-    public TextMeshProUGUI playCostText;
-    public TextMeshProUGUI useCostText;
+    public TextMeshProUGUI damageText;   
     public TextMeshProUGUI descriptionText;
 
     public Image healthField;
     public Image damageField;
-    public Image useCostField;
-
     public Image cardImage;
-
-    
-    public void SetCard(Card card)
+	
+	public void SetCard(Card card)
     {
         this.card = card;
         if (card.cardName.Length > 14)
@@ -35,28 +27,15 @@ public class CardDisplay : MonoBehaviour
         }
         else
         {
-            nameText.fontSize = 18;
+            nameText.fontSize = 15;
         }
         this.UpdateCardDisplay();
     }
-
     public void UpdateCardDisplay(){
         this.nameText.text = this.card.cardName.ToString();
-        this.playCostText.text = this.card.playCost.ToString();
         this.descriptionText.text = this.card.description;
-
-        if(this.card.type != CardType.Spell){
-            this.healthText.text = this.card.health.ToString();
-            this.damageText.text = this.card.damage.ToString();
-        } else{
-            this.damageField.gameObject.SetActive(false);
-            this.healthField.gameObject.SetActive(false);
-        }
-        if(this.card.useCost > 0){
-            this.useCostText.text = this.card.useCost.ToString();
-        } else {
-            this.useCostField.gameObject.SetActive(false);
-        }
+		this.healthText.text = this.card.health.ToString();
+		this.damageText.text = this.card.damage.ToString();
 
         if (card.cardImage != null)
         {
@@ -67,10 +46,5 @@ public class CardDisplay : MonoBehaviour
         {
             cardImage.gameObject.SetActive(false); 
         }
-		
-		cardRect.anchoredPosition = new Vector2(card.x,card.y);
     }
-	
-    
-    
 }

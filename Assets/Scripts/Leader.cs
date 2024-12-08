@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class Leader
 {
-	public string leaderName;
+    public string leaderName;
+	public int health;
 	public Sprite leaderImage;
-    public string leaderImageSourcePath;
-	public int health = 30;
-	public int damage = 0;
-	public string fractionName;
-	public float x;
-	public float y;
-    
-	public Leader(string leaderName, string fractionName){
-		this.leaderName = leaderName;
-		this.fractionName = fractionName;
-		this.leaderImageSourcePath = GenerateLeaderImageSourcePath();
-		//this.leaderImageSourcePath = "Images/Leaders/Kirian'Taal/sho'gun";
-        this.leaderImage = Resources.Load<Sprite>(this.leaderImageSourcePath);
-		this.x = 0;
-		this.y = 0;
+	public string imageSourcePath;
+	
+	public Player player;
+	
+	public Leader(Player player, string name, int health){
+		this.leaderName = name;
+		this.health = health;
+		this.imageSourcePath = GenerateImageSourcePath();
+        this.leaderImage = Resources.Load<Sprite>(this.imageSourcePath);
+		this.player = player;
 	}
 	
-	private string GenerateLeaderImageSourcePath(){
-        string sourcePath = "Images/Leaders/"+this.fractionName+"/"+this.leaderName;
+	private string GenerateImageSourcePath(){
+        string sourcePath;
+        sourcePath = "Images/Leaders/"+this.leaderName.Replace(" ", "").ToLower();
         return sourcePath;
     }
 	
-	public void SetPosition(float x, float y){
-		this.x = x;
-		this.y = y;
+	public void takeDamage(int damage){
+		if(damage >= this.health) this.health = 0;
+		else this.health -= damage;
 	}
 }
