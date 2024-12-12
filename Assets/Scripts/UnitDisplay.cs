@@ -11,6 +11,7 @@ public class UnitDisplay : MonoBehaviour
 	
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI damageText;
+	public Image camouflageImage;
 
     public Image unitImage;
 	
@@ -34,5 +35,14 @@ public class UnitDisplay : MonoBehaviour
         {
             unitImage.gameObject.SetActive(false); 
         }
+		
+		if(unit.constComponents.Contains(ConstComponent.Camouflage)) camouflageImage.color = FromRGB(87, 87, 87, 0.8f);
+		else camouflageImage.color = FromRGB(87, 87, 87, 0.0f);
     }
+	
+	
+	private Color FromRGB(int r, int g, int b, float a = 1f)
+	{
+		return new Color(r / 255f, g / 255f, b / 255f, a);
+	}
 }

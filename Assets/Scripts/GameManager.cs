@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public int turn = 0; // 0 - player 1, 1 - player 2
     public bool gameEnded = false;
     public bool cardPlayedInThisTurn = false;
-
+	
     public GameObject unitPrefab;
     public GameObject cardPrefab;
     public GameObject leaderPrefab;
@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
 
     public Transform playerLeaderPanel;
     public Transform opponentLeaderPanel;
+	
+	public TextMeshProUGUI playerHastePoints;
+	public TextMeshProUGUI opponentHastePoints;
 
     public Image playerTurnMark;
     public Image opponentTurnMark;
@@ -74,6 +77,7 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
 		if(this.gameEnded) return;
+		this.players[turn].RefreshHastePoints();
         this.turn = turn == 0 ? 1 : 0;
         this.cardPlayedInThisTurn = false;
         this.players[0].ResetUnitsAttacks();
@@ -90,6 +94,9 @@ public class GameManager : MonoBehaviour
             this.playerTurnMark.enabled = false;
             this.opponentTurnMark.enabled = true;
         }
+		this.players[turn].turnCounter++;
+		
+		
         
     }
 
@@ -178,6 +185,7 @@ public class GameManager : MonoBehaviour
 			this.DisableCardDragAndDrops(0);
 			this.DisableAllUnitsDragAndDrops(0);
         }
+		this.RefreshHasteTexts();
 		this.DisableAlreadyAttackedUnitsDragAndDrops();
 		this.UpdateAllCanAttacks();
 		
@@ -196,11 +204,18 @@ public class GameManager : MonoBehaviour
 			this.RefreshHandsAndRows();
 			return;
 		}
+		if(defender.constComponents.Contains(ConstComponent.Camouflage)){
+			this.RefreshHandsAndRows();
+			return;
+		}
 		attacker.alreadyAttacked = true;
         int attackerDamage = attacker.damage;
         int defenderDamage = defender.damage;
         attacker.takeDamage(defenderDamage);
         defender.takeDamage(attackerDamage);
+		
+		if(attacker.constComponents.Contains(ConstComponent.Camouflage)) attacker.RemoveConstComponent(ConstComponent.Camouflage);
+		
         this.RefreshHandsAndRows();
     }
 
@@ -220,6 +235,9 @@ public class GameManager : MonoBehaviour
 		if(attacker.type == CardType.Ranged && attackerDamage%2 == 0) attackerDamage = attackerDamage/2;
 		else if(attacker.type == CardType.Ranged && attackerDamage%2 != 0) attackerDamage = (attackerDamage/2)+1;
         defender.takeDamage(attackerDamage);
+		
+		if(attacker.constComponents.Contains(ConstComponent.Camouflage)) attacker.RemoveConstComponent(ConstComponent.Camouflage);
+		
         this.RefreshHandsAndRows();
         this.RefreshLeaders();
     }
@@ -397,5 +415,10 @@ public class GameManager : MonoBehaviour
 	
 	private void CheckEndGame(){
 		if(players[0].leader.health <= 0 || players[1].leader.health <= 0) this.EndGame();
+	}
+	
+	private void RefreshHasteTexts(){
+		this.playerHastePoints.text = "Haste: "+this.players[0].hastePoints.ToString()+"/"+this.players[0].maxHastePoints.ToString();
+		this.opponentHastePoints.text = "Haste: "+this.players[1].hastePoints.ToString()+"/"+this.players[1].maxHastePoints.ToString();;
 	}
 }
