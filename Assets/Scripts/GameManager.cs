@@ -362,25 +362,21 @@ public class GameManager : MonoBehaviour
 	private void UpdateAllCanAttacks(){
 		if(this.gameEnded) return;
 		foreach(Unit u in players[0].rows[0]){
+			u.canAttackRanged = false;
+			u.canAttackLeader = false;
 			if(players[1].rows[0].Count == 0){
 				u.canAttackRanged = true;
 				if(players[1].rows[1].Count == 0)
 					u.canAttackLeader = true;
-			}
-			else{
-				u.canAttackRanged = false;
-				u.canAttackLeader = false;
-			}
+			}	
 		}
 		foreach(Unit u in players[1].rows[0]){
+			u.canAttackRanged = false;
+			u.canAttackLeader = false;
 			if(players[0].rows[0].Count == 0){
 				u.canAttackRanged = true;
 				if(players[0].rows[1].Count == 0)
 					u.canAttackLeader = true;
-			}
-			else{
-				u.canAttackRanged = false;
-				u.canAttackLeader = false;
 			}
 		}
 	}

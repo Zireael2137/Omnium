@@ -23,11 +23,15 @@ public class CardDisplay : MonoBehaviour
 	public void SetCard(Card card)
     {
         this.card = card;
-        if (card.cardName.Length > 14)
+        if (card.cardName.Length > 18)
+        {
+            nameText.fontSize = 10;
+        }
+        else if (card.cardName.Length > 14)
         {
             nameText.fontSize = 12;
         }
-        else
+		else
         {
             nameText.fontSize = 15;
         }
